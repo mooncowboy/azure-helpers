@@ -1,6 +1,5 @@
 
 from azure.common.credentials import ServicePrincipalCredentials, UserPassCredentials
-from azure.monitor import MonitorClient
 from azure.mgmt.monitor import  MonitorManagementClient
 from azure.mgmt.compute import ComputeManagementClient
 from azure.mgmt.monitor.models import RuleMetricDataSource, rule_email_action,rule_condition, rule_action, rule_data_source
