@@ -1,0 +1,2 @@
+# From https://docs.microsoft.com/en-us/azure/aks/kubernetes-dashboard
+kubectl create clusterrolebinding kubernetes-dashboard --clusterrole=cluster-admin --serviceaccount=kube-system:kubernetes-dashboard
