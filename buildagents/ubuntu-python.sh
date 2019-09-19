@@ -2,6 +2,9 @@
 #######
 # Script to setup an Ubuntu VM to be used as a build agent in Azure DevOps with python projects.
 # Used in local installations of DevOps for AI
+#
+# IMPORTANT: RUN THIS SCRIPT IN THE FOLDER WHERE THE DEVOPS AGENT IS INSTALLED. EG: /home/ricardo/myagent 
+#
 #######
 set -e
 
