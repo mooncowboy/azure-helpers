@@ -16,6 +16,7 @@ PYDIR=$TOOLDIR/Python/$PYVERSION/x64
 sudo apt-get update
 sudo apt-get -y install build-essential zlib1g zlib1g-dev unzip
 sudo apt-get -y install libreadline-gplv2-dev libncursesw5-dev libssl-dev libsqlite3-dev tk-dev libgdbm-dev libc6-dev libbz2-dev
+sudo apt-get -y install dialog apt-utils
 
 # Install Azure CLI 
 curl -sL https://aka.ms/InstallAzureCLIDeb | sudo bash
