@@ -9,6 +9,7 @@ VNET_NAME=aks-vnet
 NODE_COUNT=${2:-3}
 NODE_VM_SIZE=${3:-Standard_B2ms}
 ACR_NAME=acr$RANDOM
+AKS_CLUSTER_NAME=aksworkshop-$RANDOM
 
 az group create \
     --name $RESOURCE_GROUP \
@@ -33,8 +34,6 @@ VERSION=$(az aks get-versions \
     --query 'orchestrators[?!isPreview] | [-1].orchestratorVersion' \
     --output tsv)
 
-AKS_CLUSTER_NAME=aksworkshop-$RANDOM
-
 az aks create \
 --resource-group $RESOURCE_GROUP \
 --name $AKS_CLUSTER_NAME \
@@ -51,10 +50,6 @@ az aks create \
 --node-count $NODE_COUNT \
 --node-vm-size $NODE_VM_SIZE
 --enable-managed-identity
-
-az aks get-credentials \
-    --resource-group $RESOURCE_GROUP \
-    --name $AKS_CLUSTER_NAME
 
 az acr create \
     --resource-group $RESOURCE_GROUP \
@@ -83,5 +78,22 @@ WORKSPACE_ID=$(az resource show --resource-type Microsoft.OperationalInsights/wo
 az aks enable-addons \
     --resource-group $RESOURCE_GROUP \
     --name $AKS_CLUSTER_NAME \
+    --addons monitoring \
+    --workspace-resource-id $WORKSPACE_ID    
+
+az aks enable-addons \
+    --resource-group $RESOURCE_GROUP \
+    --name $AKS_CLUSTER_NAME \
     --addons virtual-node \
     --subnet-name $SUBNET_NAME
+
+az aks get-credentials \
+    --resource-group $RESOURCE_GROUP \
+    --name $AKS_CLUSTER_NAME
+
+# Store values in .env file so other scripts can use them
+ENV_FILE=.env
+rm -f $ENV_FILE
+echo "RESOURCE_GROUP=$RESOURCE_GROUP" >> $ENV_FILE
+echo "AKS_CLUSTER_NAME=$AKS_CLUSTER_NAME" >> $ENV_FILE
+echo "ACR_NAME=$ACR_NAME" >> $ENV_FILE
