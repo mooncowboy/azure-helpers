@@ -3,20 +3,23 @@ source .env
 
 # set to true to enable MongoDB persistent storage
 PERSISTENCE=false
+SKIP_BUILD=${1:-false}
 
 kubectl create namespace ratingsapp
 
-# az acr build \
-#     --resource-group $RESOURCE_GROUP \
-#     --registry $ACR_NAME \
-#     --image ratings-api:v1 \
-#     https://github.com/MicrosoftDocs/mslearn-aks-workshop-ratings-api.git
+if [ "$SKIP_BUILD" = false ]; then
+    az acr build \
+        --resource-group $RESOURCE_GROUP \
+        --registry $ACR_NAME \
+        --image ratings-api:v1 \
+        https://github.com/MicrosoftDocs/mslearn-aks-workshop-ratings-api.git
 
-# az acr build \
-#     --resource-group $RESOURCE_GROUP \
-#     --registry $ACR_NAME \
-#     --image ratings-web:v1 \
-#     https://github.com/MicrosoftDocs/mslearn-aks-workshop-ratings-web.git
+    az acr build \
+        --resource-group $RESOURCE_GROUP \
+        --registry $ACR_NAME \
+        --image ratings-web:v1 \
+        https://github.com/MicrosoftDocs/mslearn-aks-workshop-ratings-web.git
+fi
 
 az acr repository list \
     --name $ACR_NAME \
@@ -56,4 +59,13 @@ kubectl apply \
 kubectl set image deploy/ratings-api -n ratingsapp ratings-api=$ACR_NAME.azurecr.io/ratings-api:v1
 kubectl set image deploy/ratings-web -n ratingsapp ratings-web=$ACR_NAME.azurecr.io/ratings-web:v1
 
-kubectl get service ratings-web --namespace ratingsapp -w
+# kubectl get service ratings-web --namespace ratingsapp -w
+
+# RATINGS_WEB_IP=""
+# while [ -z $RATINGS_WEB_IP ]; do
+#     RATINGS_WEB_IP=$(kubectl get svc ratings-web -n ratingsapp -o jsonpath='.status.loadBalancer.ingress[0].ip')
+#     echo "Waiting for external ip... $RATINGS_WEB_IP"
+#     sleep 5
+# done
+
+# echo "Ratings web service available at: $EXTERNAL_IP"
