@@ -1,3 +1,5 @@
+set -e
+
 # Make sure .env file exists before running this 
 source .env
 

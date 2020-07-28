@@ -2,6 +2,8 @@
 # Added: options to specify RG, node count and node vm size
 # Changed: uses managed identity, enables virtual nodes
 
+set -e
+
 REGION_NAME=eastus
 RESOURCE_GROUP=${1:-aksworkshop}
 SUBNET_NAME=aks-subnet

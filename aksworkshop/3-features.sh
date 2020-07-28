@@ -1,3 +1,5 @@
+set -e
+
 source .env
 
 ISSUER_EMAIL=${1:-$ISSUER_EMAIL}
