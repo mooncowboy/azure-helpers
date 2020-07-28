@@ -48,7 +48,7 @@ az aks create \
 --docker-bridge-address 172.17.0.1/16 \
 --generate-ssh-keys \
 --node-count $NODE_COUNT \
---node-vm-size $NODE_VM_SIZE
+--node-vm-size $NODE_VM_SIZE \
 --enable-managed-identity
 
 az acr create \
