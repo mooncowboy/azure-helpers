@@ -1,6 +1,6 @@
 set -e
 
-while getopts ":e:g:" opt; do
+while getopts ":e:g:c:s:" opt; do
     case $opt in
         e) EMAIL="$OPTARG"
         ;;
@@ -35,8 +35,16 @@ echo "Deploying AKS Workshop with values:"
 echo "Resource group: $RG"
 echo "Node size: $NODE_SIZE"
 echo "Node count: $NODE_COUNT"
-echo "Issuer email: $EMAIL"
+echo "Issuer email: $EMAIL" 
 
+echo ""
+echo "Creating cluster..."
 ./1-cluster.sh $RG $NODE_COUNT $NODE_SIZE
-./2-app.sh
-./3-features.sh $EMAIL
+
+echo "Deploying app..."
+#./2-app.sh
+
+echo "Enabling features..."
+# ./3-features.sh $EMAIL
+
+#  k get secret -n kube-system -o jsonpath="{.[*].metadata.annotations[0].key=='kubernetes.io/service-account.name'}"

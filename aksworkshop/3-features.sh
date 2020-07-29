@@ -40,11 +40,18 @@ helm repo update
 
 kubectl apply --validate=false -f https://raw.githubusercontent.com/jetstack/cert-manager/release-0.14/deploy/manifests/00-crds.yaml
 
+sleep 60
+
 helm install cert-manager \
     --namespace cert-manager \
     --version v0.14.0 \
     jetstack/cert-manager
 
+# Wait for cert manager to be available, throws error otherwise
+sleep 60
+
+echo "Deploying cluster issuer..."
 sed -e "s/\$ISSUER_EMAIL/${ISSUER_EMAIL}/" cluster-issuer.yaml | kubectl apply -n ratingsapp -f -
 
+echo "Deploying ingress..."
 sed -e "s/\$INGRESS_IP/${INGRESS_IP}/" ratings-web-ingress2.yaml | kubectl apply -n ratingsapp -f -
