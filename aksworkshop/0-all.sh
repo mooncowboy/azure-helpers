@@ -42,9 +42,9 @@ echo "Creating cluster..."
 ./1-cluster.sh $RG $NODE_COUNT $NODE_SIZE
 
 echo "Deploying app..."
-#./2-app.sh
+./2-app.sh
 
 echo "Enabling features..."
-# ./3-features.sh $EMAIL
+./3-features.sh $EMAIL
 
 #  k get secret -n kube-system -o jsonpath="{.[*].metadata.annotations[0].key=='kubernetes.io/service-account.name'}"

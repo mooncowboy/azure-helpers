@@ -55,3 +55,7 @@ sed -e "s/\$ISSUER_EMAIL/${ISSUER_EMAIL}/" cluster-issuer.yaml | kubectl apply -
 
 echo "Deploying ingress..."
 sed -e "s/\$INGRESS_IP/${INGRESS_IP}/" ratings-web-ingress2.yaml | kubectl apply -n ratingsapp -f -
+
+echo ""
+echo "Done."
+kubectl get ing -n ratingsapp
