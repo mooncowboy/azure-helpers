@@ -21,7 +21,7 @@ This script checks that the contents of AKS Workshop are successfully deployed i
 - Monitoring enabled
 - Autoscaler enabled
 
-**NOTE: **It does not require write access to any resource and only performs read operations.
+**NOTE:** It does not require write access to any resource and only performs read operations.
 
 ## Usage
 
