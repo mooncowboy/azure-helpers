@@ -1,1 +1,0 @@
-./2-app.sh true && ./3-features.sh rifiel@microsoft.com
