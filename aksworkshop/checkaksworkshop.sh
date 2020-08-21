@@ -1,9 +1,14 @@
+set -e
+
 CURRDATE=$(date "+%Y%m%d-%H%M%S")
 OUTFILE=.output-$CURRDATE.json
 NAMESPACE=${1:-ratingsapp}
+CLUSTER_NAME=$2
+RESOURCE_GROUP=$3
 
 checkConnectionToCluster() {
     echo "Checking connection to cluster..."
+    az aks show -n $CLUSTER_NAME -g $RESOURCE_GROUP --query "provisioningState"
 }
 
 checkACR() {
